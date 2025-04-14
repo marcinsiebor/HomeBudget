@@ -1,51 +1,121 @@
-# Home Budget Tracker - Frontend (React.js)
+# 🏠 HomeBudget: Budget Planner with Expense Tracking
 
-## Overview
+A full-stack budget management app that helps users easily create budgets, track expenses, and visualize their financial data. Built with **React.js**, **Node.js**, and **SQLite**.
 
-The frontend of the Home Budget Tracker project utilizes React.js, a popular JavaScript library for building user interfaces. It offers a flexible and efficient approach to creating interactive UI components.
+Developed as part of the *Software Development Techniques Project* at the University of Information Technology and Management in Rzeszów, Poland.
 
-### User Interface Design
+---
 
-The user interface design of the Home Budget Tracker application is meticulously crafted to ensure an intuitive and seamless experience for users across various pages.
+## 📑 Table of Contents
 
-- **Home / Sign-Up Page:** This page serves as the entry point for the application, featuring a welcoming layout with the Home Budget Tracker logo and a registration form for new users. Users can sign up by providing their username, email address, and password. The form includes validation to ensure accurate and complete information.
+- [Overview](#overview)
+- [Tech Stack](#tech-stack)
+- [Features](#features)
+- [System Architecture](#system-architecture)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Contributors](#contributors)
 
-- **Login Page:** The login page features a form for users to enter their email address and password to access their accounts. Custom Toast Error messages are displayed for invalid inputs, and a "Sign Up" link is provided for new users.
+---
 
-- **Add Budget Page:** This page enables users to create and manage their budgets efficiently. Users can input budget details such as category and amount. Interactive features facilitate seamless budget creation and modification.
+## 📖 Overview
 
-- **Add Expense Page:** Users can log their expenses effortlessly through the add expense page. The intuitive interface allows users to categorize expenses, specify dates, and enter amounts with ease. Real-time validation ensures data accuracy.
+HomeBudget was created to simplify the way individuals manage their personal finances. It offers tools to:
+- Securely register and log in
+- Create personalized budgets
+- Log and categorize expenses
+- View real-time budget insights through an interactive dashboard
 
-- **Budget Details Page:** The budget details page provides users with in-depth insights into their budget allocations. Users can view a breakdown of expenses within each budget category, helping them make informed financial decisions.
+The platform emphasizes usability, data security, and responsive design.
 
-### React Components and Pages
+---
 
-The React application is organized into reusable components and pages to ensure modularity and ease of maintenance.
+## 💻 Tech Stack
 
-#### Components
+### Frontend (React.js)
+- React – UI component library
+- React Router DOM – Routing and navigation
+- React Toastify – Notifications
 
-- **AddBudgetForm.jsx:** This component displays a form for creating a new budget, featuring input fields for the budget name and amount. Upon submission, it sends a POST request to the server. If successful, it displays a success message using react-toastify; otherwise, it logs an error message to the console.
+### Backend (Node.js)
+- Express.js – Server-side framework
+- SQLite3 – Lightweight embedded database
+- bcrypt – Password hashing
+- express-session – Session management
 
-- **AddExpenseForm.jsx:** The AddExpenseForm.jsx component renders a form to add a new expense, including fields for the expense name and amount. It optionally includes a dropdown to select the budget category from an array of budgets. Upon submission, it sends a POST request to the server and displays success or error messages using react-toastify.
+---
 
-- **BudgetItem.jsx:** Represents a single budget item in the application. It displays the budget's name, the amount budgeted, and a progress bar indicating the amount spent relative to the budgeted amount. It also shows the amount spent and the remaining budget. Additionally, it provides an option to delete the budget if showDelete prop is set to true, otherwise, it offers an option to view the details of the budget.
+## ✅ Features
 
-- **ExpenseItem.jsx:** Represents a single expense item in the application. It displays details of the expense including the name of the expense, the amount, and the date it was created. If showBudget prop is true, it also displays the associated budget's name, which is clickable and navigates to the budget details page. Additionally, it provides an option to delete the expense item.
+- 🔐 User authentication (Register, Login, Logout)
+- 📊 Budget creation and editing
+- 💸 Expense logging with categorization
+- 🧾 Dashboard displaying budget status and recent expenses
+- ✂️ Delete budgets and expenses
+- 📈 Budget-specific breakdown and progress visualization
 
-- **Intro.jsx:** Serves as the introduction section of the application, featuring an illustration and a form for user authentication. Users can either log in or register for an account, with the form dynamically changing based on the selected option. Upon submission, the form sends data to the backend for authentication. Successful authentication redirects the user to the dashboard page, while unsuccessful attempts prompt error messages.
+---
 
-- **Nav.jsx:** Provides navigation functionalities within the application. It includes a link to the dashboard and a button for logging out. Upon clicking the logout button, the component sends a request to the backend to log out the user. If successful, the user is redirected to the home page, and a success message is displayed. If the logout attempt fails, an error message is shown, prompting the user to try again later.
+## 🏗️ System Architecture
 
-- **Table.jsx:** Renders a table displaying expense data. It includes columns for the expense name, amount, date, and, optionally, the budget category. Each row corresponds to an individual expense item, displayed using the ExpenseItem component. If the showBudget prop is set to true, the table also includes a column for the budget category.
+### Database Schema (SQLite)
+- **Users**
+  - `id`, `username`, `email`, `password`
+- **Budgets**
+  - `id`, `name`, `amount`, `color`, `userId`, `createdAt`
+- **Expenses**
+  - `id`, `name`, `amount`, `budgetId`, `userId`, `createdAt`
 
-#### Pages
+### API Endpoints (Node.js)
 
-- **App.jsx:** The main component of the application, responsible for routing and rendering different pages based on the URL. Utilizes react-router-dom's createBrowserRouter to define routes for different components and pages, including Intro, Error, Dashboard, BudgetPage, and ExpensesPage. Also includes the ToastContainer component from react-toastify for displaying notification messages.
+| Endpoint                        | Method | Description                                |
+|---------------------------------|--------|--------------------------------------------|
+| `/register`                     | POST   | Register new user                          |
+| `/login`                        | POST   | Log in existing user                       |
+| `/logout`                       | POST   | Log out user                               |
+| `/create-budget`                | POST   | Add a new budget                           |
+| `/create-expense`               | POST   | Add a new expense                          |
+| `/fetch-budgets`                | GET    | Retrieve all user budgets                  |
+| `/fetch-expenses`               | GET    | Retrieve all user expenses                 |
+| `/calculate-spent/:id`          | GET    | Calculate total spent on a budget          |
+| `/delete-budget/:id`            | DELETE | Delete budget and its expenses             |
+| `/delete-expense/:id`           | DELETE | Delete a specific expense                  |
+| `/fetch-username`               | GET    | Get the username of the authenticated user |
 
-- **BudgetPage.jsx:** Dynamically fetches and displays expense data related to a specific budget, enabling users to manage expenses within the budget's context, visualize expense details, and add new expenses.
+---
 
-- **Dashboard.jsx:** Renders the user's personalized dashboard, displaying existing budgets, recent expenses, and providing options to add new budgets and expenses. It dynamically fetches user information, budgets, and expenses from the backend, enabling seamless management of financial data.
+## ⚙️ Installation
 
-- **Error.jsx:** Handles route errors by displaying an error message and providing options to navigate back or return to the home page. It utilizes React Router's useRouteError hook to access error information and enables navigation using the useNavigate hook.
+### Backend
+```bash
+cd backend/
+npm install
+node index.js
+```
 
-- **ExpensePage.jsx:** Displays all expenses fetched from the backend, along with recent expenses. It fetches expense data and budget data from the server and updates them periodically. If expenses exist, it renders a table showing recent expenses along with the total count, utilizing the Table component. Otherwise, it displays a message indicating no expenses to show.
+### Frontend
+```bash
+cd frontend/
+npm install
+npm start
+```
+
+---
+
+## 🚀 Usage
+
+1. Open your browser at `http://localhost:3000`
+2. Register a new account or log in with existing credentials
+3. Create a budget by entering a name and amount
+4. Add expenses and assign them to budgets
+5. View and manage your data via the dashboard
+6. Explore budget insights and delete items when necessary
+
+---
+
+## 👥 Contributors
+
+| Name                   | Student ID | Role         |
+|------------------------|------------|--------------|
+| Marcin Siebor          | w67069     | Developer    |
+| Ahmed Alkali Mohammed  | w66986     | Developer    |
